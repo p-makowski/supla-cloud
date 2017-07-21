@@ -47,7 +47,7 @@
                                 <i class="pe-7s-diskette"></i>
                                 {{ $t('Save') }}
                             </button>
-                            <button class="btn btn-success btn-lg"
+                            <button class="btn btn-green btn-lg"
                                 :disabled="action == undefined || !nextRunDates.length || fetchingNextRunDates"
                                 @click="submit(true)">
                                 <i :class="scheduleId ? 'pe-7s-diskette' : 'pe-7s-plus'"></i>

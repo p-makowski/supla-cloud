@@ -30,9 +30,11 @@ export const mutations = {
         state.nextRunDates = [];
     },
     updateChannel  (state, channel) {
-        state.channel = channel;
-        state.action = undefined;
-        state.actionParam = undefined;
+        if (state.channel !== channel) {
+            state.channel = channel;
+            state.action = undefined;
+            state.actionParam = undefined;
+        }
     },
     updateAction  (state, action) {
         state.action = action;
