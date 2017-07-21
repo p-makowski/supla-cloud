@@ -5,7 +5,7 @@ namespace SuplaBundle\Enums;
 use MyCLabs\Enum\Enum;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-class ChannelFunction extends Enum {
+final class ChannelFunction extends Enum {
     const NONE = 0;
     const CONTROLLINGTHEGATEWAYLOCK = 10;
     const CONTROLLINGTHEGATE = 20;

@@ -44,6 +44,7 @@ class IODevice {
 
     /**
      * @ORM\Column(name="guid", type="binary", length=16, nullable=false, unique=true)
+     * @Groups({"basic", "flat"})
      */
     private $guid;
 
@@ -57,6 +58,7 @@ class IODevice {
     /**
      * @ORM\ManyToOne(targetEntity="Location", inversedBy="ioDevices")
      * @ORM\JoinColumn(name="location_id", referencedColumnName="id", nullable=false)
+     * @Groups({"basic"})
      */
     private $location;
 
@@ -114,6 +116,7 @@ class IODevice {
 
     /**
      * @ORM\Column(name="software_version", type="string", length=10, nullable=false)
+     * @Groups({"basic", "flat"})
      */
     private $softwareVersion;
 

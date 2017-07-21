@@ -33,12 +33,12 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * @Route("/direct")
  */
-class DirectUrlController extends AbstractController {
+class DirectLinkController extends AbstractController {
     /**
      * @Route("/", methods={"GET"})
      * @Template
      */
-    public function directUrlListAction(Request $request) {
+    public function directLinksListAction(Request $request) {
         if ($this->expectsJsonResponse()) {
             $query = new ScheduleListQuery($this->getDoctrine());
             $sort = explode('|', $request->get('sort', ''));
