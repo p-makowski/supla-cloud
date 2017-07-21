@@ -28,7 +28,6 @@ use SuplaBundle\Form\Model\Registration;
 use SuplaBundle\Form\Model\ResetPassword;
 use SuplaBundle\Form\Type\RegistrationType;
 use SuplaBundle\Form\Type\ResetPasswordType;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\FormError;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,7 +36,7 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 /**
  * @Route("/account")
  */
-class AccountController extends Controller {
+class AccountController extends AbstractController {
 
     /**
      * @Route("/register", name="_account_register")
@@ -359,18 +358,16 @@ class AccountController extends Controller {
      * @Method("GET")
      */
     public function getSchedulableChannels() {
-        $ioDeviceManager = $this->get('iodevice_manager');
         $schedulableChannels = $this->get('schedule_manager')->getSchedulableChannels($this->getUser());
-        $channelToFunctionsMap = [];
-        foreach ($schedulableChannels as $channel) {
-            $channelToFunctionsMap[$channel->getId()] = $ioDeviceManager->functionActionMap()[$channel->getFunction()];
-        }
-        return new JsonResponse([
-            'userChannels' => array_map(function (IODeviceChannel $channel) use ($ioDeviceManager) {
+//        $channelActionsMap = [];
+//        foreach ($schedulableChannels as $channel) {
+//            $channelActionsMap[$channel->getId()] = $channel->getFunctionEnum()->getPossibleActions();
+//        }
+        return $this->jsonResponse([
+            'userChannels' => array_map(function (IODeviceChannel $channel) {
                 return [
                     'id' => $channel->getId(),
-                    'function' => $channel->getFunction(),
-                    'functionName' => $ioDeviceManager->channelFunctionToString($channel->getFunction()),
+                    'function' => $channel->getFunctionEnum(),
                     'type' => $channel->getType(),
                     'caption' => $channel->getCaption(),
                     'device' => [
@@ -383,8 +380,8 @@ class AccountController extends Controller {
                     ],
                 ];
             }, $schedulableChannels),
-            'actionCaptions' => ScheduleAction::captions(),
-            'channelFunctionMap' => $channelToFunctionsMap,
+//            'actionCaptions' => ScheduleAction::captions(),
+//            'channelFunctionMap' => $channelActionsMap,
         ]);
     }
 }

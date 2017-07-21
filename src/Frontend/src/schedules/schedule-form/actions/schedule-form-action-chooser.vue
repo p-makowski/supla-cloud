@@ -12,21 +12,21 @@
                 </option>
             </select>
         </div>
-        <div v-show="channel">
-            <div v-for="possibleAction in channelFunctionMap[channel]">
+        <div v-if="chosenChannel">
+            <div v-for="possibleAction in chosenChannel.function.possibleActions">
                 <div class="radio">
                     <label>
                         <input type="radio"
-                            :value="possibleAction"
+                            :value="possibleAction.value"
                             v-model="action">
-                        {{ $t(actionCaptions[possibleAction]) }}
+                        {{ $t(possibleAction.caption) }}
                     </label>
                 </div>
-                <span v-if="possibleAction == 50 && action == possibleAction">
+                <span v-if="possibleAction.value == 50 && action == possibleAction.value">
                     <rolette-shutter-partial-percentage v-model="actionParam"></rolette-shutter-partial-percentage>
                 </span>
-                <span v-if="possibleAction == 80 && action == possibleAction">
-                    <rgbw-parameters-setter v-model="actionParam" :channel-function="chosenChannel.function"></rgbw-parameters-setter>
+                <span v-if="possibleAction.value == 80 && action == possibleAction">
+                    <rgbw-parameters-setter v-model="actionParam" :channel-function="chosenChannel.function.value"></rgbw-parameters-setter>
                 </span>
             </div>
         </div>
@@ -52,17 +52,13 @@
         components: {RgbwParametersSetter, RoletteShutterPartialPercentage},
         data() {
             return {
-                userChannels: [],
-                channelFunctionMap: {},
-                actionCaptions: {}
+                userChannels: []
             };
         },
         mounted() {
             this.$http.get('account/schedulable-channels').then(({body}) => {
                 if (body.userChannels.length) {
                     this.userChannels = body.userChannels;
-                    this.channelFunctionMap = body.channelFunctionMap;
-                    this.actionCaptions = body.actionCaptions;
                     Vue.nextTick(() => $(this.$refs.channelsDropdown).chosen().change((e) => {
                         this.channel = e.currentTarget.value;
                     }));
@@ -73,7 +69,7 @@
         },
         methods: {
             channelTitle(channel) {
-                return (channel.caption || channel.functionName) + ` (${channel.device.location.caption} / ${channel.device.name})`;
+                return (channel.caption || this.$t(channel.function.caption)) + ` (${channel.device.location.caption} / ${channel.device.name})`;
             },
             goToSchedulesList() {
                 window.location.assign(withBaseUrl('schedule'));
@@ -88,10 +84,10 @@
                     Vue.nextTick(() => $(this.$refs.channelsDropdown).trigger("chosen:updated"));
                     return this.$store.state.channel;
                 },
-                set(channel) {
-                    this.$store.commit('updateChannel', channel);
-                    if (channel && this.channelFunctionMap[channel].length == 1) {
-                        this.action = this.channelFunctionMap[channel][0];
+                set(channelId) {
+                    this.$store.commit('updateChannel', channelId);
+                    if (channelId && this.chosenChannel.function.possibleActions.length == 1) {
+                        this.action = this.chosenChannel.function.possibleActions[0].value;
                     }
                 }
             },

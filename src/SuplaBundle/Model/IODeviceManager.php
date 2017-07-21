@@ -25,7 +25,7 @@ use Doctrine\Common\Persistence\ManagerRegistry;
 use SuplaBundle\Entity\IODevice;
 use SuplaBundle\Entity\IODeviceChannel;
 use SuplaBundle\Entity\User;
-use SuplaBundle\Enums\ScheduleAction;
+use SuplaBundle\Enums\ChannelFunction;
 use SuplaBundle\Supla\SuplaConst;
 use Symfony\Bundle\TwigBundle\TwigEngine;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
@@ -208,75 +208,9 @@ class IODeviceManager {
         return $this->translator->trans($result);
     }
 
+    /** @deprecated */
     public function channelFunctionToString($func) {
-        $result = 'None';
-
-        switch ($func) {
-            case SuplaConst::FNC_CONTROLLINGTHEGATEWAYLOCK:
-                $result = 'Gateway lock operation';
-                break;
-            case SuplaConst::FNC_CONTROLLINGTHEGATE:
-                $result = 'Gate operation';
-                break;
-            case SuplaConst::FNC_CONTROLLINGTHEGARAGEDOOR:
-                $result = 'Garage door operation';
-                break;
-            case SuplaConst::FNC_THERMOMETER:
-                $result = 'Thermometer';
-                break;
-            case SuplaConst::FNC_OPENINGSENSOR_GATEWAY:
-                $result = 'Gateway opening sensor';
-                break;
-            case SuplaConst::FNC_OPENINGSENSOR_GATE:
-                $result = 'Gate opening sensor';
-                break;
-            case SuplaConst::FNC_OPENINGSENSOR_GARAGEDOOR:
-                $result = 'Garage door opening sensor';
-                break;
-            case SuplaConst::FNC_NOLIQUIDSENSOR:
-                $result = 'No liquid sensor';
-                break;
-            case SuplaConst::FNC_CONTROLLINGTHEDOORLOCK:
-                $result = 'Door lock operation';
-                break;
-            case SuplaConst::FNC_OPENINGSENSOR_DOOR:
-                $result = 'Door opening sensor';
-                break;
-            case SuplaConst::FNC_CONTROLLINGTHEROLLERSHUTTER:
-                $result = 'Roller shutter operation';
-                break;
-            case SuplaConst::FNC_OPENINGSENSOR_ROLLERSHUTTER:
-                $result = 'Roller shutter opening sensor';
-                break;
-            case SuplaConst::FNC_POWERSWITCH:
-                $result = 'On/Off switch';
-                break;
-            case SuplaConst::FNC_LIGHTSWITCH:
-                $result = 'Light switch';
-                break;
-            case SuplaConst::FNC_HUMIDITY:
-                $result = 'Humidity sensor';
-                break;
-            case SuplaConst::FNC_HUMIDITYANDTEMPERATURE:
-                $result = 'Temperature and humidity sensor';
-                break;
-            case SuplaConst::FNC_DIMMER:
-                $result = 'Dimmer';
-                break;
-            case SuplaConst::FNC_RGBLIGHTING:
-                $result = 'RGB lighting';
-                break;
-            case SuplaConst::FNC_DIMMERANDRGBLIGHTING:
-                $result = 'Dimmer and RGB lighting';
-                break;
-            case SuplaConst::FNC_DISTANCESENSOR:
-                $result = 'Distance sensor';
-                break;
-            case SuplaConst::FNC_DEPTHSENSOR:
-                $result = 'Depth sensor';
-                break;
-        }
-
+        $result = (new ChannelFunction($func))->getCaption();
         return $this->translator->trans($result);
     }
 
@@ -321,21 +255,6 @@ class IODeviceManager {
         }
 
         return $this->translator->trans($result);
-    }
-
-    public function functionActionMap() {
-        return [
-            SuplaConst::FNC_CONTROLLINGTHEGATEWAYLOCK => [ScheduleAction::OPEN],
-            SuplaConst::FNC_CONTROLLINGTHEDOORLOCK => [ScheduleAction::OPEN],
-            SuplaConst::FNC_CONTROLLINGTHEGATE => [ScheduleAction::OPEN, ScheduleAction::CLOSE],
-            SuplaConst::FNC_CONTROLLINGTHEGARAGEDOOR => [ScheduleAction::OPEN, ScheduleAction::CLOSE],
-            SuplaConst::FNC_CONTROLLINGTHEROLLERSHUTTER => [ScheduleAction::SHUT, ScheduleAction::REVEAL, ScheduleAction::REVEAL_PARTIALLY],
-            SuplaConst::FNC_POWERSWITCH => [ScheduleAction::TURN_ON, ScheduleAction::TURN_OFF],
-            SuplaConst::FNC_LIGHTSWITCH => [ScheduleAction::TURN_ON, ScheduleAction::TURN_OFF],
-            SuplaConst::FNC_DIMMER => [ScheduleAction::SET_RGBW_PARAMETERS],
-            SuplaConst::FNC_RGBLIGHTING => [ScheduleAction::SET_RGBW_PARAMETERS],
-            SuplaConst::FNC_DIMMERANDRGBLIGHTING => [ScheduleAction::SET_RGBW_PARAMETERS],
-        ];
     }
 
     public function ioDeviceById($id, $user = null) {

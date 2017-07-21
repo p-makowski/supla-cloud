@@ -21,6 +21,7 @@ namespace SuplaBundle\Entity;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use SuplaBundle\Enums\ChannelFunction;
 use SuplaBundle\Validator\Constraints as SuplaAssert;
 use Symfony\Component\HttpKernel\Log\LoggerInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -134,8 +135,13 @@ class IODeviceChannel {
         return $this->schedules;
     }
 
+    /** @deprecated use getFunctionEnum() */
     public function getFunction() {
         return $this->function;
+    }
+
+    public function getFunctionEnum(): ChannelFunction {
+        return new ChannelFunction($this->function);
     }
 
     public function setFunction($function) {
