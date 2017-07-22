@@ -81,7 +81,7 @@ class DirectLink {
     private $executionsLimit;
 
     /**
-     * @ORM\Column(name="active_from", type="utcdatetime", nullable=true)
+     * @ORM\Column(name="last_used", type="utcdatetime", nullable=true)
      * @Groups({"basic", "flat"})
      */
     private $lastUsed;
