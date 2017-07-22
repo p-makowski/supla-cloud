@@ -66,6 +66,12 @@ class IODeviceChannel {
     private $schedules;
 
     /**
+     * @var DirectLink[]
+     * @ORM\OneToMany(targetEntity="DirectLink", mappedBy="channel", cascade={"remove"})
+     */
+    private $directLinks;
+
+    /**
      * @ORM\Column(name="caption", type="string", length=100, nullable=true)
      * @Assert\Length(max=100)
      */
@@ -133,6 +139,11 @@ class IODeviceChannel {
     /** @return Collection|Schedule[] */
     public function getSchedules(): Collection {
         return $this->schedules;
+    }
+
+    /** @return Collection|DirectLink[] */
+    public function getDirectLinks(): Collection {
+        return $this->directLinks;
     }
 
     /** @deprecated use getFunctionEnum() */

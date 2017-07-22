@@ -34,7 +34,6 @@ use Symfony\Component\Validator\Constraints;
  *     @ORM\Index(name="enabled_idx", columns={"enabled"}),
  *     @ORM\Index(name="date_start_idx", columns={"date_start"})
  * })
- * @UniqueEntity(fields="id", message="IODevice already exists")
  */
 class Schedule {
     /**
