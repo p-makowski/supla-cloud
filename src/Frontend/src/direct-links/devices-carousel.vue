@@ -22,7 +22,7 @@
                 </a>
             </slide>
         </carousel>
-        <loader-dots></loader-dots>
+        <loader-dots v-else></loader-dots>
     </div>
 </template>
 
@@ -79,7 +79,7 @@
             color: white;
             padding: 5px 10px;
             margin: 4px 5px 0 4px;
-            &:hover, &:active {
+            &:hover, &:active, &.selected {
                 margin-top: 0;
                 box-shadow: 0 4px 3px rgba(0, 0, 0, .6);
             }

@@ -1,15 +1,19 @@
 <template>
     <div>
-        <devices-carousel @select="deviceChanged"></devices-carousel>
-        {{ device ? device.name : 'nie ma' }}
+        <div class="form-group">
+            <devices-carousel @select="deviceChanged"></devices-carousel>
+        </div>
+        <device-direct-links v-if="device"
+            :device="device"></device-direct-links>
     </div>
 </template>
 
 <script>
     import DevicesCarousel from "./devices-carousel.vue";
+    import DeviceDirectLinks from "./device-direct-links.vue"
 
     export default {
-        components: {DevicesCarousel},
+        components: {DevicesCarousel, DeviceDirectLinks},
         data() {
             return {
                 device: null,

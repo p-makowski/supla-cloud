@@ -19,7 +19,7 @@
 
 namespace SuplaBundle\Handler;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +31,7 @@ class AuthHandler implements AuthenticationSuccessHandlerInterface {
     protected $entityManager = null;
     protected $router = null;
 
-    public function __construct(EntityManager $entityManager, Router $router) {
+    public function __construct(EntityManagerInterface $entityManager, Router $router) {
         $this->entityManager = $entityManager;
         $this->router = $router;
     }

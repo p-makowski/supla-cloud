@@ -17,6 +17,7 @@
 
 namespace SuplaBundle\Entity;
 
+use Assert\Assertion;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints;
@@ -98,14 +99,21 @@ class DirectLink {
      */
     protected $enabled = true;
 
-//    public function __construct(User $user = null, array $data = []) {
-//        $this->user = $user;
-//        if (count($data)) {
-//            $this->fill($data);
-//        }
-//    }
+    public function __construct(IODeviceChannel $channel) {
+        $this->channel = $channel;
+    }
 
-//    public function fill(array $data) {
+    private function setAllowedActions(string $allowedActions) {
+        $this->allowedActions = $allowedActions;
+    }
+
+    public static function create(array $data): DirectLink {
+        $directLink = new self();
+        Assertion::keyExists($data, 'channel');
+        Assertion::isInstanceOf($data['channel'], IODeviceChannel::class);
+        $directLink->channel = $data['channel'];
+        $directLink->caption = $data['caption'] ?? null;
+        return $directLink;
 //        Assert::that($data)->notEmptyKey('timeExpression');
 //        $this->setTimeExpression($data['timeExpression']);
 //        $this->setAction(new ScheduleAction($data['action'] ?? ScheduleAction::TURN_ON));
@@ -115,6 +123,6 @@ class DirectLink {
 //        $this->setDateEnd(empty($data['dateEnd']) ? null : \DateTime::createFromFormat(\DateTime::ATOM, $data['dateEnd']));
 //        $this->setMode(new ScheduleMode($data['scheduleMode']));
 //        $this->setCaption($data['caption'] ?? null);
-//    }
+    }
 
 }

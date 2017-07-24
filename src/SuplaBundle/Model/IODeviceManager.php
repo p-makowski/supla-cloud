@@ -148,7 +148,7 @@ class IODeviceManager {
             return $fnc;
         }
 
-        return $map[$type];
+        return $map[$type] ?? [];
     }
 
     public function channelTypeToString($type) {
@@ -287,13 +287,7 @@ class IODeviceManager {
     }
 
     public function getChannels(IODevice $iodev) {
-        if ($iodev === null || !($iodev instanceof IODevice)) {
-            return null;
-        }
-
-        return $this->channel_rep->findBy(
-            ['iodevice' => $iodev]
-        );
+        return $this->channel_rep->findBy(['iodevice' => $iodev]);
     }
 
     public function getUnattachedOPENINGSENSORs($func, $include = 0) {

@@ -93,3 +93,31 @@ input[type=text], input[type=password], input[type=email] {
 {
   opacity: 0
 }
+
+.panel, .panel-heading, .badge {
+  border-radius: 0 !important;
+}
+
+.btn {
+  border-radius: 2 !important;
+}
+
+.panel {
+  .panel-heading {
+    font-family: 'Quicksand', sans-serif;
+    h4 {
+      margin: 0;
+    }
+  }
+  &.panel-default {
+    border-color: black;
+    .panel-heading {
+      background: black;
+      color: white;
+    }
+  }
+}
+
+.id {
+  font-family: monospace, sans-serif;
+}

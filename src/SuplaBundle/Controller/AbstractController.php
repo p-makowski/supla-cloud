@@ -1,13 +1,21 @@
 <?php
+
 namespace SuplaBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 abstract class AbstractController extends Controller {
     protected function expectsJsonResponse(): bool {
         $request = $this->container->get('request_stack')->getCurrentRequest();
         return in_array('application/json', $request->getAcceptableContentTypes());
+    }
+
+    protected function expectJsonResponse() {
+        if (!$this->expectsJsonResponse()) {
+            throw new NotFoundHttpException();
+        }
     }
 
     protected function jsonResponse($responseData, $serializationGroups = 'basic', int $status = 200): JsonResponse {

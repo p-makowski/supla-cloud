@@ -74,6 +74,7 @@ class IODeviceChannel {
     /**
      * @ORM\Column(name="caption", type="string", length=100, nullable=true)
      * @Assert\Length(max=100)
+     * @Groups({"basic"})
      */
     private $caption;
 
@@ -151,6 +152,9 @@ class IODeviceChannel {
         return $this->function;
     }
 
+    /**
+     * @Groups({"basic"})
+     */
     public function getFunctionEnum(): ChannelFunction {
         return new ChannelFunction($this->function);
     }

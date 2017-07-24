@@ -1,17 +1,18 @@
 <?php
+
 namespace SuplaBundle\EventListener;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManagerInterface;
 use SuplaBundle\Entity\User;
 use Symfony\Component\Security\Core\Encoder\EncoderFactoryInterface;
 use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 
 class LegacyPasswordMigrationListener {
     private $encoderFactory;
-    /** @var EntityManager */
+    /** @var EntityManagerInterface */
     private $entityManager;
 
-    public function __construct(EncoderFactoryInterface $encoderFactory, EntityManager $entityManager) {
+    public function __construct(EncoderFactoryInterface $encoderFactory, EntityManagerInterface $entityManager) {
         $this->encoderFactory = $encoderFactory;
         $this->entityManager = $entityManager;
     }
