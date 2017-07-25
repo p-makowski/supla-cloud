@@ -25,10 +25,6 @@ a {
   }
 }
 
-.no-margin-top {
-  margin-top: 0 !important;
-}
-
 .low-z-index { // fixes some problems with elements appearing incorrectly above the others
   position: relative;
   z-index: 1
@@ -53,36 +49,53 @@ input[type=text], input[type=password], input[type=email] {
   border-radius: 0 !important;
 }
 
-.btn-green {
-  background: #15B133;
-  color: white;
-  border: 0 !important;
+.btn {
   border-radius: 2px !important;
-  &:hover {
-    background: lighten(#15B133, 5%);
-    color: white !important;;
+  transition: transform .2s;
+  &:active {
+    transform: scale(0.98);
   }
-}
-
-.btn-white {
-  background: white;
-  color: #15B133;
-  border: 1px solid #15B133 !important;
-  border-radius: 2px !important;
-  &:hover, &:focus, &:active {
-    background: #cffdcd;
-    color: #15B133 !important;
-  }
-}
-
-.btn-black {
-  background: black;
-  color: white;
-  border-radius: 2px !important;
-  &:hover {
-    background: #444;
+  &.btn-green, &.btn-primary {
+    background: #15B133;
     color: white;
+    border: 0 !important;
+    &:hover {
+      background: lighten(#15B133, 5%);
+      color: white !important;;
+    }
   }
+  &.btn-white, &.btn-default {
+    background: white;
+    color: #15B133;
+    border: 1px solid #15B133 !important;
+    &:hover, &:focus, &:active {
+      background: #ecfdde;
+      color: #15B133 !important;
+    }
+  }
+  .btn-black {
+    background: black;
+    color: white;
+    border-radius: 2px !important;
+    &:hover {
+      background: #444;
+      color: white;
+    }
+  }
+  &.btn-danger {
+    background: white;
+    color: #b1000b;
+    border: 1px solid #b10900 !important;
+    &:hover, &:focus, &:active {
+      background: #fde6e9;
+      color: #b10003 !important;
+    }
+  }
+}
+
+.alert {
+  border-radius: 2px;
+  background: white;
 }
 
 .fade-enter-active, .fade-leave-active {
@@ -96,10 +109,6 @@ input[type=text], input[type=password], input[type=email] {
 
 .panel, .panel-heading, .badge {
   border-radius: 0 !important;
-}
-
-.btn {
-  border-radius: 2 !important;
 }
 
 .panel {
@@ -120,4 +129,16 @@ input[type=text], input[type=password], input[type=email] {
 
 .id {
   font-family: monospace, sans-serif;
+}
+
+.no-margin-top {
+  margin-top: 0 !important;
+}
+
+.no-padding {
+  padding: 0 !important;
+}
+
+.no-border {
+  border: 0 !important;
 }

@@ -10,10 +10,7 @@
                         <span class="badge pull-right id">ID{{channel.id}}</span>
                         <h4>{{ channel.caption || $t(channel.functionEnum.caption) }}</h4>
                     </div>
-                    <div class="list-group">
-                        <div class="list-group-item">link</div>
-                        <div class="list-group-item">link</div>
-                    </div>
+                    <channel-direct-links :channel="channel"></channel-direct-links>
                 </div>
             </div>
         </div>
@@ -22,9 +19,10 @@
 
 <script>
     import LoaderDots from "../common/loader-dots.vue";
+    import ChannelDirectLinks from "./channel-direct-links.vue";
 
     export default {
-        components: {LoaderDots},
+        components: {LoaderDots, ChannelDirectLinks},
         props: ['device'],
         data() {
             return {

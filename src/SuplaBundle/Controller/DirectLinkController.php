@@ -17,20 +17,18 @@
 
 namespace SuplaBundle\Controller;
 
-use Assert\Assertion;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SuplaBundle\Entity\DirectLink;
+use SuplaBundle\Entity\IODeviceChannel;
 use SuplaBundle\Model\IODeviceManager;
 use SuplaBundle\Model\Schedule\ScheduleListQuery;
 use SuplaBundle\Model\Transactional;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @Route("/direct")
- */
 class DirectLinkController extends AbstractController {
     use Transactional;
 
@@ -42,7 +40,7 @@ class DirectLinkController extends AbstractController {
     }
 
     /**
-     * @Route("/", methods={"GET"})
+     * @Route("/direct/", methods={"GET"})
      * @Template
      */
     public function directLinksListAction(Request $request) {
@@ -57,16 +55,18 @@ class DirectLinkController extends AbstractController {
     }
 
     /**
-     * @Route
+     * @Route("/channel/{channel}/direct")
      * @Method("POST")
+     * @Security("user == channel.getUser()")
      */
-    public function createDirectLinkAction(Request $request) {
-        $data = $request->request->all();
-        Assertion::keyExists($data, 'channelId');
-        $channel = $this->deviceManager->channelById($data['channelId']);
-        Assertion::notNull($channel);
+    public function createDirectLinkAction(IODeviceChannel $channel) {
+//        $data = $request->request->all();
+//        Assertion::keyExists($data, 'channelId');
+//        $channel = $this->deviceManager->channelById($data['channelId']);
+//        Assertion::notNull($channel);
         $directLink = new DirectLink($channel);
         $this->transactional(function (EntityManagerInterface $entityManager) use ($directLink) {
+            $directLink->generateSlug();
             $entityManager->persist($directLink);
         });
         return $this->jsonResponse($directLink);

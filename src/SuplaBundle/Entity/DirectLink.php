@@ -43,6 +43,12 @@ class DirectLink {
     private $slug;
 
     /**
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id", nullable=false)
+     */
+    private $user;
+
+    /**
      * @ORM\Column(name="caption", type="string", length=255, nullable=true)
      * @Constraints\Length(max=255)
      * @Groups({"basic", "flat"})
@@ -53,7 +59,6 @@ class DirectLink {
      * @ORM\ManyToOne(targetEntity="IODeviceChannel", inversedBy="directLinks")
      * @ORM\JoinColumn(name="channel_id", referencedColumnName="id", nullable=false)
      * @Constraints\NotNull
-     * @Groups({"basic"})
      */
     private $channel;
 
@@ -100,11 +105,77 @@ class DirectLink {
     protected $enabled = true;
 
     public function __construct(IODeviceChannel $channel) {
+        $this->user = $channel->getUser();
         $this->channel = $channel;
+        $this->setAllowedActions([]);
     }
 
-    private function setAllowedActions(string $allowedActions) {
-        $this->allowedActions = $allowedActions;
+    /** @return int */
+    public function getId() {
+        return $this->id;
+    }
+
+    /** @return string */
+    public function getCaption() {
+        return $this->caption;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActiveFrom() {
+        return $this->activeFrom;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActiveTo() {
+        return $this->activeTo;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getExecutionsLimit() {
+        return $this->executionsLimit;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastUsed() {
+        return $this->lastUsed;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getLastIpv4() {
+        return $this->lastIpv4;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function isEnabled(): bool {
+        return $this->enabled;
+    }
+
+
+    public function generateSlug() {
+        Assertion::null($this->slug);
+        $this->slug = bin2hex(random_bytes(16));
+        return $this->slug;
+    }
+
+    public function setAllowedActions(array $allowedActions) {
+        $this->allowedActions = json_encode($allowedActions);
+    }
+
+    public function getAllowedActions(): array {
+        $actions = json_decode($this->allowedActions, true);
+        return $actions ? $actions : [];
     }
 
     public static function create(array $data): DirectLink {
