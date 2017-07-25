@@ -1,10 +1,16 @@
 <template>
     <div class="list-group">
-        <div class="list-group-item"
-            v-for="directLink in directLinks">
-            <div class="text-center"></div>
+        <div class="list-group-item text-center"
+            v-if="loadingDirectLinks">
+            <button-loading-dots></button-loading-dots>
         </div>
-        <div class="list-group-item no-padding">
+        <div class="list-group-item clearfix"
+            v-else
+            v-for="directLink in directLinks">
+            <on-off-switch v-model="directLink.enabled" class="pull-right"></on-off-switch>
+        </div>
+        <div class="list-group-item no-padding"
+            v-show="!loadingDirectLinks">
             <button type="button"
                 class="btn btn-default btn-block no-border"
                 @click="addNewLink()">
@@ -20,9 +26,10 @@
 
 <script>
     import ButtonLoadingDots from "../common/button-loading-dots.vue";
+    import OnOffSwitch from "./on-off-switch.vue";
 
     export default {
-        components: {ButtonLoadingDots},
+        components: {ButtonLoadingDots, OnOffSwitch},
         props: ['channel'],
         data() {
             return {
@@ -32,14 +39,14 @@
             };
         },
         mounted() {
-            this.loadDeviceChannels();
+            this.loadChannelDirectLinks();
         },
         methods: {
             loadChannelDirectLinks() {
-//                this.loadingChannels = true;
-//                this.$http.get(`iodev/${this.device.id}/channels`).then(({body: channels}) => {
-//                    this.channels = channels;
-//                }).finally(() => this.loadingChannels = false);
+                this.loadingDirectLinks = true;
+                this.$http.get(`channel/${this.channel.id}/direct`).then(({body: directLinks}) => {
+                    this.directLinks = directLinks;
+                }).finally(() => this.loadingDirectLinks = false);
             },
             addNewLink() {
                 this.addingNewLink = true;

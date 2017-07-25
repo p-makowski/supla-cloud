@@ -56,6 +56,23 @@ class DirectLinkController extends AbstractController {
 
     /**
      * @Route("/channel/{channel}/direct")
+     * @Method("GET")
+     */
+    public function getDirectLinksAction(IODeviceChannel $channel) {
+//        $data = $request->request->all();
+//        Assertion::keyExists($data, 'channelId');
+//        $channel = $this->deviceManager->channelById($data['channelId']);
+//        Assertion::notNull($channel);
+//        $directLink = new DirectLink($channel);
+//        $this->transactional(function (EntityManagerInterface $entityManager) use ($directLink) {
+//            $directLink->generateSlug();
+//            $entityManager->persist($directLink);
+//        });
+        return $this->jsonResponse($channel->getDirectLinks());
+    }
+
+    /**
+     * @Route("/channel/{channel}/direct")
      * @Method("POST")
      * @Security("user == channel.getUser()")
      */
