@@ -182,6 +182,10 @@ class DirectLink {
         return $actions ? $actions : [];
     }
 
+    public function canBeUsed(): bool {
+        return $this->isEnabled();
+    }
+
     public static function create(array $data): DirectLink {
         $directLink = new self();
         Assertion::keyExists($data, 'channel');
@@ -203,5 +207,9 @@ class DirectLink {
     public function update(array $data) {
         $this->enabled = $data['enabled'] ?? false;
         $this->setAllowedActions($data['allowedActions'] ?? []);
+    }
+
+    public function verifySlug(string $hashedSlug) {
+        return strcmp($this->slug, $hashedSlug) === 0;
     }
 }

@@ -22,7 +22,7 @@ namespace SuplaBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use SuplaBundle\Entity\IODeviceChannel;
-use SuplaBundle\Enums\ScheduleAction;
+use SuplaBundle\Enums\ChannelFunctionAction;
 use SuplaBundle\Form\Model\ChangePassword;
 use SuplaBundle\Form\Model\Registration;
 use SuplaBundle\Form\Model\ResetPassword;
