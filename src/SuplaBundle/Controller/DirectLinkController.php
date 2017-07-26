@@ -28,6 +28,7 @@ use SuplaBundle\Model\IODeviceManager;
 use SuplaBundle\Model\Schedule\ScheduleListQuery;
 use SuplaBundle\Model\Transactional;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DirectLinkController extends AbstractController {
     use Transactional;
@@ -87,5 +88,16 @@ class DirectLinkController extends AbstractController {
             $entityManager->persist($directLink);
         });
         return $this->jsonResponse($directLink);
+    }
+
+    /**
+     * @Route("/direct/{directLink}/{slug}/{action}")
+     * @Method("GET")
+     */
+    public function executeDirectLinkAction(DirectLink $directLink, string $slug, string $action) {
+        if (!$directLink->canBeUsed() || !$directLink->verifySlug($slug)) {
+            throw new NotFoundHttpException();
+        }
+        return $this->jsonResponse(['executed' => $action]);
     }
 }

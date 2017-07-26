@@ -4,13 +4,6 @@
         <div v-else>
             <div v-for="channel in channels">
                 <channel-direct-links :channel="channel"></channel-direct-links>
-                <!--<div class="panel panel-default">-->
-                    <!--<div class="panel-heading">-->
-                        <!--<span class="badge pull-right id">ID{{channel.id}}</span>-->
-                        <!--<h4>{{ channel.caption || $t(channel.functionEnum.caption) }}</h4>-->
-                    <!--</div>-->
-                    <!--<channel-direct-links :channel="channel"></channel-direct-links>-->
-                <!--</div>-->
             </div>
         </div>
     </div>
