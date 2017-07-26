@@ -59,16 +59,20 @@ class DirectLinkController extends AbstractController {
      * @Method("GET")
      */
     public function getDirectLinksAction(IODeviceChannel $channel) {
-//        $data = $request->request->all();
-//        Assertion::keyExists($data, 'channelId');
-//        $channel = $this->deviceManager->channelById($data['channelId']);
-//        Assertion::notNull($channel);
-//        $directLink = new DirectLink($channel);
-//        $this->transactional(function (EntityManagerInterface $entityManager) use ($directLink) {
-//            $directLink->generateSlug();
-//            $entityManager->persist($directLink);
-//        });
         return $this->jsonResponse($channel->getDirectLinks());
+    }
+
+    /**
+     * @Route("/channel/{channel}/direct/{directLink}")
+     * @Method("PUT")
+     */
+    public function updateDirectLinksAction(DirectLink $directLink, Request $request) {
+        $data = $request->request->all();
+        $directLink->update($data);
+        $this->transactional(function (EntityManagerInterface $entityManager) use ($directLink) {
+            $entityManager->persist($directLink);
+        });
+        return $this->jsonResponse($directLink);
     }
 
     /**
@@ -77,10 +81,6 @@ class DirectLinkController extends AbstractController {
      * @Security("user == channel.getUser()")
      */
     public function createDirectLinkAction(IODeviceChannel $channel) {
-//        $data = $request->request->all();
-//        Assertion::keyExists($data, 'channelId');
-//        $channel = $this->deviceManager->channelById($data['channelId']);
-//        Assertion::notNull($channel);
         $directLink = new DirectLink($channel);
         $this->transactional(function (EntityManagerInterface $entityManager) use ($directLink) {
             $directLink->generateSlug();

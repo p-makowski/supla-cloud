@@ -20,6 +20,7 @@ namespace SuplaBundle\Entity;
 use Assert\Assertion;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Symfony\Component\Validator\Constraints;
 
 /**
@@ -59,6 +60,7 @@ class DirectLink {
      * @ORM\ManyToOne(targetEntity="IODeviceChannel", inversedBy="directLinks")
      * @ORM\JoinColumn(name="channel_id", referencedColumnName="id", nullable=false)
      * @Constraints\NotNull
+     * @Groups({"basic"})
      */
     private $channel;
 
@@ -120,9 +122,11 @@ class DirectLink {
         return $this->caption;
     }
 
-    /**
-     * @return mixed
-     */
+    public function getChannel(): IODeviceChannel {
+        return $this->channel;
+    }
+
+    /** @return mixed */
     public function getActiveFrom() {
         return $this->activeFrom;
     }
@@ -194,5 +198,10 @@ class DirectLink {
 //        $this->setDateEnd(empty($data['dateEnd']) ? null : \DateTime::createFromFormat(\DateTime::ATOM, $data['dateEnd']));
 //        $this->setMode(new ScheduleMode($data['scheduleMode']));
 //        $this->setCaption($data['caption'] ?? null);
+    }
+
+    public function update(array $data) {
+        $this->enabled = $data['enabled'] ?? false;
+        $this->setAllowedActions($data['allowedActions'] ?? []);
     }
 }

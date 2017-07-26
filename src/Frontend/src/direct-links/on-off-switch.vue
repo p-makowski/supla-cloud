@@ -1,11 +1,11 @@
 <template>
     <switches v-model="onoff"
-        @input="update()"
         theme="bulma"
         type-bold="true"
         color="green"
-        :text-enabled="$t('Enabled')"
-        :text-disabled="$t('Disabled')"></switches>
+        emit-on-mount="false"
+        :text-enabled="$t(labelEnabled)"
+        :text-disabled="$t(labelDisabled)"></switches>
 </template>
 
 <script>
@@ -13,15 +13,39 @@
 
     export default {
         components: {Switches},
-        props: ['value'],
-        data(){
-          return {
-              onoff: this.value,
-          }
+        props: ['value', 'label', 'trueValue'],
+        data() {
+            return {
+                labelEnabled: 'Enabled',
+                labelDisabled: 'Disabled',
+            }
         },
-        methods: {
-            update() {
-                this.$emit('input', this.onoff);
+        mounted() {
+            if (this.label) {
+                this.labelEnabled = this.labelDisabled = this.label;
+            }
+        },
+        computed: {
+            valueWhenSelected() {
+                return this.trueValue || true;
+            },
+            onoff: {
+                get() {
+                    return Array.isArray(this.value) ? this.value.indexOf(this.valueWhenSelected) >= 0 : !!this.value;
+                },
+                set(value) {
+                    if (Array.isArray(this.value)) {
+                        if (value) {
+                            if (!this.onoff) {
+                                this.$emit('input', this.value.concat(this.valueWhenSelected).sort());
+                            }
+                        } else {
+                            this.$emit('input', this.value.filter((v) => v !== this.valueWhenSelected));
+                        }
+                    } else {
+                        this.$emit('input', value);
+                    }
+                }
             }
         }
     };
@@ -29,13 +53,13 @@
 
 <style lang="scss">
     /*.vue-switcher {*/
-        /*&__label {*/
-            /*text-align: right;*/
-        /*}*/
-        /*&--unchecked {*/
-            /*&__label {*/
-                /*text-align: left;*/
-            /*}*/
-        /*}*/
+    /*&__label {*/
+    /*text-align: right;*/
+    /*}*/
+    /*&--unchecked {*/
+    /*&__label {*/
+    /*text-align: left;*/
+    /*}*/
+    /*}*/
     /*}*/
 </style>

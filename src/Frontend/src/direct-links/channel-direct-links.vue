@@ -1,18 +1,12 @@
 <template>
-    <div class="list-group">
-        <div class="list-group-item text-center"
+    <div>
+        <div class="text-center"
             v-if="loadingDirectLinks">
             <button-loading-dots></button-loading-dots>
         </div>
-        <div class="list-group-item clearfix"
-            v-else
-            v-for="directLink in directLinks">
-            <on-off-switch v-model="directLink.enabled" class="pull-right"></on-off-switch>
-        </div>
-        <div class="list-group-item no-padding"
-            v-show="!loadingDirectLinks">
+        <div v-else>
             <button type="button"
-                class="btn btn-default btn-block no-border"
+                class="btn btn-default pull-right"
                 @click="addNewLink()">
                 <button-loading-dots v-if="addingNewLink"></button-loading-dots>
                 <span v-else>
@@ -20,16 +14,30 @@
                     {{ $t('Add') }}
                 </span>
             </button>
+            <h3>
+                {{ channel.caption || $t(channel.functionEnum.caption) }}
+            </h3>
+
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="list-group">
+                        <div class="list-group-item"
+                            v-for="directLink in directLinks">
+                            <direct-link-form :direct-link="directLink"></direct-link-form>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     import ButtonLoadingDots from "../common/button-loading-dots.vue";
-    import OnOffSwitch from "./on-off-switch.vue";
+    import DirectLinkForm from "./direct-link-form.vue";
 
     export default {
-        components: {ButtonLoadingDots, OnOffSwitch},
+        components: {ButtonLoadingDots, DirectLinkForm},
         props: ['channel'],
         data() {
             return {
@@ -50,9 +58,9 @@
             },
             addNewLink() {
                 this.addingNewLink = true;
-                this.$http.post(`channel/${this.channel.id}/direct`).then(({directLink}) => {
+                this.$http.post(`channel/${this.channel.id}/direct`).then(({body: directLink}) => {
                     this.directLinks.push(directLink);
-                });
+                }).finally(() => this.addingNewLink = false);
             }
         },
         watch: {

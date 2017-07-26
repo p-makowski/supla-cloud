@@ -19,6 +19,7 @@
 
 namespace SuplaBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use SuplaBundle\Enums\ChannelFunction;
@@ -107,6 +108,10 @@ class IODeviceChannel {
      * @ORM\Column(name="param3", type="integer", nullable=false)
      */
     private $param3 = '';
+
+    public function __construct() {
+        $this->directLinks = new ArrayCollection();
+    }
 
     public function getId() {
         return $this->id;
