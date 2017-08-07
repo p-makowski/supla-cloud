@@ -16,6 +16,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
  * @method static ChannelFunctionAction TURN_ON()
  * @method static ChannelFunctionAction TURN_OFF()
  * @method static ChannelFunctionAction SET_RGBW_PARAMETERS()
+ * @method static ChannelFunctionAction STOP()
  */
 final class ChannelFunctionAction extends Enum {
     const OPEN = 10;
@@ -26,6 +27,7 @@ final class ChannelFunctionAction extends Enum {
     const TURN_ON = 60;
     const TURN_OFF = 70;
     const SET_RGBW_PARAMETERS = 80;
+    const STOP = 90;
 
     /**
      * @Groups({"basic", "flat"})

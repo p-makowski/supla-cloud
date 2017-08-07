@@ -27,11 +27,13 @@ use SuplaBundle\Entity\IODeviceChannel;
 use SuplaBundle\Model\IODeviceManager;
 use SuplaBundle\Model\Schedule\ScheduleListQuery;
 use SuplaBundle\Model\Transactional;
+use SuplaBundle\Supla\SuplaServerAware;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class DirectLinkController extends AbstractController {
     use Transactional;
+    use SuplaServerAware;
 
     /** @var IODeviceManager */
     private $deviceManager;

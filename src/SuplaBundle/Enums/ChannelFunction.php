@@ -50,6 +50,12 @@ final class ChannelFunction extends Enum {
         return self::captions()[$this->value] ?? 'None';
     }
 
+    public function canExecuteAction(ChannelFunctionAction $action): bool {
+        return in_array($action->getValue(), array_map(function (ChannelFunctionAction $possibleAction) {
+            return $possibleAction->getValue();
+        }, $this->getPossibleActions()));
+    }
+
     public static function actions(): array {
         return [
             self::CONTROLLINGTHEGATEWAYLOCK => [ChannelFunctionAction::OPEN()],
@@ -59,7 +65,8 @@ final class ChannelFunction extends Enum {
             self::CONTROLLINGTHEROLLERSHUTTER => [
                 ChannelFunctionAction::SHUT(),
                 ChannelFunctionAction::REVEAL(),
-                ChannelFunctionAction::REVEAL_PARTIALLY()
+                ChannelFunctionAction::REVEAL_PARTIALLY(),
+                ChannelFunctionAction::STOP(),
             ],
             self::POWERSWITCH => [ChannelFunctionAction::TURN_ON(), ChannelFunctionAction::TURN_OFF()],
             self::LIGHTSWITCH => [ChannelFunctionAction::TURN_ON(), ChannelFunctionAction::TURN_OFF()],
