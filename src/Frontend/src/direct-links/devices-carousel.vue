@@ -1,10 +1,11 @@
 <template>
     <div class="devices-carousel">
-        <carousel :navigation-enabled="true"
+        <carousel v-if="devices !== undefined"
+            :navigation-enabled="true"
             :pagination-enabled="false"
             navigation-next-label="&gt;"
             navigation-prev-label="&lt;"
-            :per-page-custom="[[1024, 4]]">
+            :per-page="4">
             <slide v-for="device in devices"
                 :key="device.id">
                 <a class="device"
@@ -21,18 +22,20 @@
                 </a>
             </slide>
         </carousel>
+        <loader-dots></loader-dots>
     </div>
 </template>
 
 <script>
     import {Carousel, Slide} from 'vue-carousel';
+    import LoaderDots from "../common/loader-dots.vue"
 
     export default {
-        components: {Carousel, Slide},
+        components: {Carousel, Slide, LoaderDots},
         data() {
             return {
                 selectedDevice: undefined,
-                devices: []
+                devices: undefined
             };
         },
         mounted() {
@@ -76,7 +79,7 @@
             color: white;
             padding: 5px 10px;
             margin: 4px 5px 0 4px;
-            &:hover {
+            &:hover, &:active {
                 margin-top: 0;
                 box-shadow: 0 4px 3px rgba(0, 0, 0, .6);
             }
