@@ -28,14 +28,14 @@
 
 <script>
     import {Carousel, Slide} from 'vue-carousel';
-    import LoaderDots from "../common/loader-dots.vue"
+    import LoaderDots from "../common/loader-dots.vue";
 
     export default {
         components: {Carousel, Slide, LoaderDots},
         data() {
             return {
                 selectedDevice: undefined,
-                devices: undefined
+                devices: undefined,
             };
         },
         mounted() {
@@ -46,7 +46,7 @@
         methods: {
             onDeviceClick(device) {
                 this.selectedDevice = device;
-                this.$emit('select', device)
+                this.$emit('select', device);
             }
         }
     };

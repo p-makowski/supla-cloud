@@ -119,10 +119,9 @@ class DirectLink {
 //        $this->setAction(new ScheduleAction($data['action'] ?? ScheduleAction::TURN_ON));
 //        $this->setActionParam($data['actionParam'] ?? null);
 //        $this->setChannel($data['channel'] ?? null);
-//        $this->setDateStart(empty($data['dateStart']) ? new \DateTime() : \DateTime::createFromFormat(\DateTime::ATOM, $data['dateStart']));
+//      $this->setDateStart(empty($data['dateStart']) ? new \DateTime() : \DateTime::createFromFormat(\DateTime::ATOM, $data['dateStart']));
 //        $this->setDateEnd(empty($data['dateEnd']) ? null : \DateTime::createFromFormat(\DateTime::ATOM, $data['dateEnd']));
 //        $this->setMode(new ScheduleMode($data['scheduleMode']));
 //        $this->setCaption($data['caption'] ?? null);
     }
-
 }

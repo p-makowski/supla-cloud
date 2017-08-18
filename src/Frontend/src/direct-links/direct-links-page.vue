@@ -10,7 +10,7 @@
 
 <script>
     import DevicesCarousel from "./devices-carousel.vue";
-    import DeviceDirectLinks from "./device-direct-links.vue"
+    import DeviceDirectLinks from "./device-direct-links.vue";
 
     export default {
         components: {DevicesCarousel, DeviceDirectLinks},

@@ -30,7 +30,7 @@
             return {
                 channels: [],
                 loadingChannels: true,
-            }
+            };
         },
         mounted() {
             this.loadDeviceChannels();

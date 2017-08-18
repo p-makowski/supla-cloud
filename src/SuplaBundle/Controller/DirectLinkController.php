@@ -17,22 +17,16 @@
 
 namespace SuplaBundle\Controller;
 
-use Assert\Assert;
 use Assert\Assertion;
-use Assert\InvalidArgumentException;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SuplaBundle\Entity\DirectLink;
-use SuplaBundle\Entity\Schedule;
 use SuplaBundle\Model\IODeviceManager;
 use SuplaBundle\Model\Schedule\ScheduleListQuery;
 use SuplaBundle\Model\Transactional;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @Route("/direct")
@@ -72,7 +66,7 @@ class DirectLinkController extends AbstractController {
         $channel = $this->deviceManager->channelById($data['channelId']);
         Assertion::notNull($channel);
         $directLink = new DirectLink($channel);
-        $this->transactional(function(EntityManagerInterface $entityManager) use ($directLink) {
+        $this->transactional(function (EntityManagerInterface $entityManager) use ($directLink) {
             $entityManager->persist($directLink);
         });
         return $this->jsonResponse($directLink);
