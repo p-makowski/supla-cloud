@@ -18,7 +18,7 @@
             return {
                 labelEnabled: 'Enabled',
                 labelDisabled: 'Disabled',
-            }
+            };
         },
         mounted() {
             if (this.label) {
