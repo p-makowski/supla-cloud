@@ -19,12 +19,32 @@ namespace SuplaWebApiBundle\Controller;
 
 use FOS\RestBundle\Controller\Annotations as Rest;
 use FOS\RestBundle\Controller\FOSRestController;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use SuplaBundle\Entity\User;
 
 /**
  * @Rest\Version("v2")
  */
 class ApiIODeviceController extends FOSRestController {
+//    /**
+//     * @Response(
+//     *     response=200,
+//     *     description="Returns the list of devices",
+//     *     @Schema(
+//     *         type="array",
+//     *         @Model(type=\SuplaBundle\Entity\IODevice::class, groups={"basic"})
+//     *     )
+//     * )
+//     */
+    /**
+     * Returns a list of IO devices added to the authorized account without their connection status.
+     *
+     * @ApiDoc(
+     *   output = {"class" = "SuplaBundle\Entity\IODevice", "collection" = true, "groups" = {"basic"}}
+     * )
+     */
     public function getIodevicesAction() {
+        /** @var User $user */
         $user = $this->getUser();
         return $this->view($user->getIODevices(), 200);
     }

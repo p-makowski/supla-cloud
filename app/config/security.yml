@@ -32,7 +32,7 @@ security:
 
   access_control:
     -
-      path: ^/(auth|(account/(create|check|confirm|register|reset|ajax/(forgot|user_exists)))|oauth/v2/token)
+      path: ^/(auth|(account/(create|check|confirm|register|reset|ajax/(forgot|user_exists)))|oauth/v2/token|api-docs)
       role: [IS_AUTHENTICATED_ANONYMOUSLY]
       requires_channel: https
     -

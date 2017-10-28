@@ -112,15 +112,15 @@ class DefaultController extends Controller {
         );
     }
 
-    /**
-     * Redirect URLs with a Trailing Slash.
-     * @see https://symfony.com/doc/current/routing/redirect_trailing_slash.html
-     * @Route("/{url}", name="remove_trailing_slash", requirements={"url" = ".*\/$"}, methods={"GET"})
-     */
-    public function removeTrailingSlashAction(Request $request) {
-        $pathInfo = $request->getPathInfo();
-        $requestUri = $request->getRequestUri();
-        $url = str_replace($pathInfo, rtrim($pathInfo, ' /'), $requestUri);
-        return $this->redirect($url, 301);
-    }
+//    /**
+//     * Redirect URLs with a Trailing Slash.
+//     * @see https://symfony.com/doc/current/routing/redirect_trailing_slash.html
+//     * @Route("/{url}", name="remove_trailing_slash", requirements={"url" = ".*\/$"}, methods={"GET"})
+//     */
+//    public function removeTrailingSlashAction(Request $request) {
+//        $pathInfo = $request->getPathInfo();
+//        $requestUri = $request->getRequestUri();
+//        $url = str_replace($pathInfo, rtrim($pathInfo, ' /'), $requestUri);
+//        return $this->redirect($url, 301);
+//    }
 }

@@ -39,10 +39,16 @@ fos_oauth_server:
 fos_rest:
   routing_loader:
     default_format: json
+    include_format: false
   serializer:
     groups: ['basic']
   versioning: true
   view:
+    formats:
+      rss: false
+      xml: false
+      html: false
+      json: true
     view_response_listener: 'force'
 
 framework:
@@ -73,6 +79,17 @@ framework:
   trusted_hosts: ~
   validation:
     enable_annotations: true
+
+nelmio_api_doc:
+  name: "SUPLA API"
+#  documentation:
+#    info:
+#      title: SUPLA Cloud
+#      description: This is an awesome app!
+#      version: 2.1.5
+#  routes:
+#    path_patterns:
+#      - ^/api
 
 supla:
   clients_registration:

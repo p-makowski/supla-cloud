@@ -17,6 +17,7 @@ class AppKernel extends Kernel {
             new EWZ\Bundle\RecaptchaBundle\EWZRecaptchaBundle(),
             new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
+            new Nelmio\ApiDocBundle\NelmioApiDocBundle(),
             new SuplaBundle\SuplaBundle(),
             new SuplaApiBundle\SuplaApiBundle(),
             new SuplaWebApiBundle\SuplaWebApiBundle(),

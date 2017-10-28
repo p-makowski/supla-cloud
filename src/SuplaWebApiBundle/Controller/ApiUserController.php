@@ -18,8 +18,16 @@
 namespace SuplaWebApiBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
 class ApiUserController extends FOSRestController {
+    /**
+     * Returns a currently authenticated User data.
+     *
+     * @ApiDoc(
+     *   output = {"class"="\SuplaBundle\Entity\User","groups"={"basic"}}
+     * )
+     */
     public function currentUserAction() {
         return $this->view($this->getUser(), 200);
     }

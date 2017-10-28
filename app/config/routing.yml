@@ -6,7 +6,12 @@ api:
 
 webapi:
   type: rest
+  defaults: {_format: json}
   resource: "@SuplaWebApiBundle/Resources/config/routing.yml"
 
 logout:
   path: /auth/logout
+
+NelmioApiDocBundle:
+  resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
+  prefix:   /api-docs
